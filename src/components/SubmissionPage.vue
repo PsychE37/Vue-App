@@ -2,11 +2,13 @@
   <div class="body">
     <v-card>
       <v-card-title> Submission Details </v-card-title>
-      <v-data-table
-        :headers="Headers"
-        :items="Details"
-        hide-default-footer
-      ></v-data-table>
+      <v-data-table :headers="Headers" :items="Details" hide-default-footer>
+        <template v-slot:[`item.status`]="{ item }">
+          <div :class="getColor(item.status)">
+            {{ item.status }}
+          </div>
+        </template>
+      </v-data-table>
     </v-card>
     <div class="editor">
       <v-card>
@@ -126,6 +128,10 @@ export default {
     copyToClipboard() {
       navigator.clipboard.writeText(this.Content);
     },
+    getColor(status) {
+      if (status == "Accepted") return "accepted";
+      else return "wrong";
+    },
   },
 };
 </script>
@@ -156,5 +162,12 @@ export default {
 }
 .button {
   margin-top: 1.7%;
+}
+
+.wrong {
+  color: red;
+}
+.accepted {
+  color: green;
 }
 </style>
