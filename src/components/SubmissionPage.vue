@@ -68,19 +68,39 @@ export default {
     return {
       Headers: [
         {
-          text: "Subimission ID",
-          align: "start",
+          text: "Submission ID",
+          align: "center",
           value: "id",
           sortable: false,
         },
-        { text: "Submitted On", value: "time", sortable: false },
-        { text: "Submitted By", value: "user", sortable: false },
-        { text: "Problem", value: "problem", sortable: false },
-        { text: "Language", value: "language", sortable: false },
-        { text: "Status", value: "status", sortable: false },
-        { text: "Score", value: "score", sortable: false },
-        { text: "Time(ms)", value: "time", sortable: false },
-        { text: "Memory(KiB)", value: "memory", sortable: false },
+        {
+          text: "Submitted On",
+          value: "time",
+          sortable: false,
+          align: "center",
+        },
+        {
+          text: "Submitted By",
+          value: "user",
+          sortable: false,
+          align: "center",
+        },
+        { text: "Problem", value: "problem", sortable: false, align: "center" },
+        {
+          text: "Language",
+          value: "language",
+          sortable: false,
+          align: "center",
+        },
+        { text: "Status", value: "status", sortable: false, align: "center" },
+        { text: "Score", value: "score", sortable: false, align: "center" },
+        { text: "Time(ms)", value: "time", sortable: false, align: "center" },
+        {
+          text: "Memory(KiB)",
+          value: "memory",
+          sortable: false,
+          align: "center",
+        },
       ],
       Details: [
         {
@@ -168,6 +188,7 @@ export default {
   color: red;
 }
 .accepted {
-  color: green;
+  color: rgb(19, 156, 19);
+  font-weight: 500;
 }
 </style>

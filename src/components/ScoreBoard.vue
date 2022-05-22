@@ -4,17 +4,30 @@
       <v-card-title>
         Scoreboard
         <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
+        <div class="search">
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </div>
+        <div class="select">
+          <v-select
+            v-model="selectedProblems"
+            :items="Problems"
+            label="Users who solved"
+            multiple
+            outlined
+            return-object
+          >
+          </v-select>
+        </div>
       </v-card-title>
       <v-data-table
         :headers="Headers"
-        :items="Users"
+        :items="showUsers"
         :search="search"
         class="elevation-2"
       >
@@ -79,20 +92,31 @@ export default {
   data() {
     return {
       search: "",
+      blank: [],
+      selectedProblems: [],
+      Problems: ["A", "B", "C", "D", "E"],
+      // problemsMap: {
+      //   A: { text: "A" },
+      //   B: { text: "B" },
+      //   C: { text: "C" },
+      //   D: { text: "D" },
+      //   E: { text: "E" },
+      // },
       Headers: [
         {
           text: "Rank",
           align: "center",
           value: "rank",
           style: "background-color: grey",
+          filter: false,
         },
         { text: "Name", value: "name", align: "center" },
-        { text: "Score", value: "total_score", align: "center" },
-        { text: "A", value: "a_score", align: "center" },
-        { text: "B", value: "b_score", align: "center" },
-        { text: "C", value: "c_score", align: "center" },
-        { text: "D", value: "d_score", align: "center" },
-        { text: "E", value: "e_score", align: "center" },
+        { text: "Score", value: "total_score", align: "center", filter: false },
+        { text: "A", value: "a_score", align: "center", filter: false },
+        { text: "B", value: "b_score", align: "center", filter: false },
+        { text: "C", value: "c_score", align: "center", filter: false },
+        { text: "D", value: "d_score", align: "center", filter: false },
+        { text: "E", value: "e_score", align: "center", filter: false },
       ],
       Users: [
         {
@@ -194,6 +218,10 @@ export default {
       ],
     };
   },
+  // created() {
+  //   this.Problems = Object.values(this.problemsMap);
+  //   this.selectedProblems = this.Problems;
+  // },
   methods: {
     getColor(solved) {
       if (solved == 1 || solved[0] == "1") return "solved";
@@ -201,8 +229,41 @@ export default {
       else return "unsolved";
     },
     viewSubmission(score) {
-      if (score == 1)
+      if (score == 1 || score[0] == "1")
         window.location.href = "http://localhost:8080/submissions/";
+    },
+  },
+  computed: {
+    showUsers() {
+      var userArr = [...this.Users];
+      for (const problem of this.selectedProblems) {
+        if (problem == "A") {
+          userArr = userArr.filter(
+            (s) => s.a_score[0] == "1" || s.a_score == 1
+          );
+        }
+        if (problem == "B") {
+          userArr = userArr.filter(
+            (s) => s.b_score[0] == "1" || s.b_score == 1
+          );
+        }
+        if (problem == "C") {
+          userArr = userArr.filter(
+            (s) => s.c_score[0] == "1" || s.c_score == 1
+          );
+        }
+        if (problem == "D") {
+          userArr = userArr.filter(
+            (s) => s.d_score[0] == "1" || s.d_score == 1
+          );
+        }
+        if (problem == "E") {
+          userArr = userArr.filter(
+            (s) => s.e_score[0] == "1" || s.e_score == 1
+          );
+        }
+      }
+      return userArr;
     },
   },
 };
@@ -235,5 +296,15 @@ export default {
 
 .solved:hover {
   cursor: pointer;
+}
+
+.select {
+  width: 20%;
+  margin-top: 1%;
+}
+
+.search {
+  width: 30%;
+  padding-right: 1%;
 }
 </style>
